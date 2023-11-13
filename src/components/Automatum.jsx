@@ -5,12 +5,49 @@ function Automatum() {
     const [inputResult, setInputResult] = useState("")
     const documentation = 
     `LOS DATOS QUE ACEPTA SON LOS SIGUIENTES:
-    \rVARIABLES:
+    \rVARIABLES(NO DECLARADAS):
+    > string nombreCadena;
+    > int nombreDigito;
+    > char nombreCaracter;
+    > bool nombreBooleano;
+    > float nombreFlotante;
+
+    \rVARIABLES(DECLARADAS):
     > string nombreCadena = "texto";
     > int nombreDigito = 1;
     > char nombreCaracter = 'a';
     > bool nombreBooleano = true;
     > float nombreFlotante = 9.2;
+
+    \rSENTENCIA "IF":
+    > if (parametro):
+        contenido
+      :
+
+    \rSENTENCIA "ELSE IF":
+    > if (parametro):
+        contenido
+      :: else if (parametro):
+        contenido
+      :
+
+    \rSENTENCIA "ELSE":
+    > if (parametro):
+        contenido
+      :: else if (parametro):
+        contenido
+      :: else :
+        contenido
+      :
+    \rCICLO "WHILE":
+    > while(condición):
+        contenido
+      :
+    \rFUNCIONES
+    > func nombreFunción(parametro):
+        contenido
+        return none;
+      :
     `
 
     const grammar = {
@@ -70,7 +107,7 @@ function Automatum() {
     return (
         <div className='main-container'>
             <div className='header'>
-                <div className='header-content' onClick={()=>{console.log(inputResult)}}>ZORN INDUSTRIES</div>
+                <div className='header-content' onClick={()=>{console.log(inputResult)}}>DORIAN INDUSTRIES</div>
             </div>
             <div className='content'>
                 <div className='first-content'>
