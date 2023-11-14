@@ -29,23 +29,23 @@ const stateMap = {
 
         {
             nextState: "qfr",
-            error: "Invalid variable name o palabra reservada mal escrita",
+            error: "Invalid variable name o reserved word name",
             rule: /^([a-z][a-z0-9_]*)(.read)$/,
         },
         {
             nextState: "qfw",
-            error: "Invalid variable name o palabra reservada mal escrita",
+            error: "Invalid variable name o reserved word name",
             rule: /^(\(".*?"\)\.write$|\([a-z][a-z0-9_]*\)\.write)$/,
         },
         {
             nextState: "q20",
-            error: "Invalid variable name o palabra reservada mal escrita",
+            error: "Invalid variable name o reserved word name",
             rule: /^\(".*$/
         },
         {
             nextState: "q2",
             error: "Palabra reservada mal escrita",
-            rule: /^fnc$/,
+            rule: /^func$/,
         },
         {
             nextState: "q6",
@@ -288,7 +288,7 @@ const stateMap = {
             error: "Invalid word",
             rule: /^[^"]+$/
         }
-    ],"q080": [
+    ], "q080": [
         {
             nextState: "q0801",
             error: "Invalid expression",
@@ -322,13 +322,13 @@ const stateMap = {
     "q082": [
         {
             nextState: "q0803",
-            error: "Double quotation marks expected",
-            rule: /^".*"$/
+            error: "Quotation marks expected",
+            rule: /^''$/
         },
         {
-            nextState: "q084",
-            error: "Double quotation marks expected",
-            rule: /^".*$/
+            nextState: "q0803",
+            error: "Quotation marks expected",
+            rule: /^'[a-zA-Z0-9]'$/,
         },
     ],
     "q0803": [
@@ -348,13 +348,13 @@ const stateMap = {
     "q084": [
         {
             nextState: "q083",
-            error: "Invalid value or double quotation marks missing",
-            rule: /^[^"]"*$/
+            error: "Invalid value or Quotation marks missing",
+            rule: /^[^']'*$/
         },
         {
             nextState: "q084",
             error: "Invalid word",
-            rule: /^[^"]+$/
+            rule: /^[^']+$/
         }
     ],
     "q1": [
@@ -367,19 +367,19 @@ const stateMap = {
     "q2": [
         {
             nextState: "q3",
-            error: "Invalid variable name",
+            error: "Invalid name variable",
             rule: /^[a-z][a-z0-9_]*$/,
         }
     ],
     "q3": [
         {
             nextState: "q4",
-            error: "Cierre y apertura no válido",
-            rule: /^(\(\){$|^\([a-z][a-z0-9_]*\){)$/
+            error: "Invalid closing parenthesis and opening curly braces",
+            rule: /^(\(\)$|^\([a-zA-Z0-9_,]*\):)$/
         },
         {
             nextState: "q003",
-            error: "Cierre y apertura no válido",
+            error: "Invalid closing parenthesis and opening curly braces",
             rule: /^\([a-z][a-z0-9_]*$/
         }
     ],
@@ -393,12 +393,12 @@ const stateMap = {
     "q004": [
         {
             nextState: "q4",
-            error: "Cierre y apertura no válido",
+            error: "Invalid closing parenthesis and opening curly braces",
             rule: /^[a-z][a-z0-9_]*\){$/
         },
         {
             nextState: "q003",
-            error: "Cierre y apertura no válido",
+            error: "Invalid closing parenthesis and opening curly braces",
             rule: /^[a-z][a-z0-9_]*$/
 
         }
@@ -406,32 +406,29 @@ const stateMap = {
     "q4": [
         {
             nextState: "q5",
-            error: "Invalid variable name o palabra reservada mal escrita",
-            rule: /^(\(".*?"\)\.write$|\([a-z][a-z0-9_]*\)\.write|([a-z][a-z0-9_]*)(.read))$/,
+            error: "Invalid return statement",
+            rule: /^[a-zA-Z0-9_]*[a-zA-Z0-9_]+;$/,
         },
         {
             nextState: "q050",
-            error: "Invalid variable name o inicio mal escrito",
-            rule: /^\(".*$/
+            error: "Invalid name variable o inicio mal escrito",
+            rule: /^\(".*$/,
         },
     ],
+    
     "q050": [
         {
-            nextState: "q5",
-            error: "Palabra no válida o cierre incorrecto",
-            rule: /^[^"]*"\)\.write$/
-        },
-        {
             nextState: "q050",
-            error: "Palabra no válido",
-            rule: /^[^"]+$/
-        }
+            error: "Invalid word phrase",
+            rule: /^return .+$/,
+        },
     ],
+    
     "q5": [
         {
             nextState: "qff",
-            error: "Cierre no válido",
-            rule: /^\}$/,
+            error: "Invalid curly braces closing",
+            rule: /^:$/,
         },
     ],
     "q6": [
@@ -456,7 +453,7 @@ const stateMap = {
         },
         {
             nextState: "q090",
-            error: "Invalid variable name o inicio mal escrito",
+            error: "Invalid name variable o inicio mal escrito",
             rule: /^\(".*$/
         },
     ],
@@ -468,14 +465,14 @@ const stateMap = {
         },
         {
             nextState: "q090",
-            error: "Palabra no válido",
+            error: "Invalid word phrase",
             rule: /^[^"]+$/
         }
     ],
     "q9": [
         {
             nextState: "q10",
-            error: "Cierre no válido",
+            error: "Invalid curly braces closing",
             rule: /\)$/,
         },
     ],
@@ -494,7 +491,7 @@ const stateMap = {
     "q11": [
         {
             nextState: "qfs",
-            error: "Cierre no válido",
+            error: "Invalid curly braces closing",
             rule: /}$/,
         },
     ],
@@ -540,7 +537,7 @@ const stateMap = {
         },
         {
             nextState: "q016",
-            error: "Palabra no válido",
+            error: "Invalid word phrase",
             rule: /^[^"]+$/
         }
     ],
@@ -578,7 +575,7 @@ const stateMap = {
         },
         {
             nextState: "q19",
-            error: "Palabra no válido",
+            error: "Invalid word phrase",
             rule: /^[^"]+$/
         }
     ],
@@ -590,7 +587,7 @@ const stateMap = {
         },
         {
             nextState: "q20",
-            error: "Palabra no válido",
+            error: "Invalid word phrase",
             rule: /^[^"]+$/
         }
     ],
@@ -614,10 +611,10 @@ export function validateVariableDeclaration(value) {
         }
     }
 
-    if (currentState === "qfd" || currentState === "q011" || currentState === "q021" || currentState === "q031" || currentState === "q041") {
+    if (currentState === "qfd" || currentState === "q011" || currentState === "q021" || currentState === "q031" || currentState === "q041" || currentState === "q081") {
         return "Declaration variable is accepted";
     }
-    if (currentState === "q013" || currentState === "q023" || currentState === "q033" || currentState === "q043") {
+    if (currentState === "q013" || currentState === "q023" || currentState === "q033" || currentState === "q043" || currentState === "q083") {
         return "Variable declaration and initialization is valid";
     }
     if (currentState === "q19" || currentState === "q20") {
@@ -630,7 +627,7 @@ export function validateVariableDeclaration(value) {
         return "Escribir variable válido";
     }
     if (currentState === "qff") {
-        return "Declaración de función válido";
+        return "Function declaration is valid";
     }
     if (currentState === "qfs") {
         return "Declaración de funcion de sentencia válido";

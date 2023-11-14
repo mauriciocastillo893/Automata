@@ -44,13 +44,13 @@ function Automatum() {
         contenido
       :
     \rCICLO "WHILE":
-    > while(condición):
+    > while (condición):
         contenido
       :
     \rFUNCIONES
-    > func nombreFunción(parametro):
+    > func nombreFunción (parametro):
         contenido
-        return none;
+        return;
       :
     `
 
