@@ -44,13 +44,16 @@ const stateMap = {
         {
             nextState: "q6",
             error: "Palabra reservada mal escrita",
-            rule: /^switch$/,
+            rule: /^if$/,
         },
         {
             nextState: "q12",
             error: "Palabra reservada mal escrita",
             rule: /^while$/,
         },
+
+        
+
         /* {
            nextState: "q17",
            error: "Nombre de variable no válido",
@@ -297,60 +300,94 @@ const stateMap = {
     "q6": [
         {
             nextState: "q7",
-            error: "Nombre de variable de switch no válido",
-            rule: /^\([a-z][a-z0-9_]*\){$/,
+            error: "Nombre de la variable del if no válido",
+            rule: /^\([a-z][a-z0-9_]*\):$/,
         },
     ],
     "q7": [
         {
             nextState: "q8",
-            error: "Case no válido",
-            rule: /^case_[a-z][a-z0-9_]*\($/,
+            error: "contenido no válido",
+            rule: /^[a-z][a-z0-9_]*$/,
         },
     ],
     "q8": [
         {
-            nextState: "q9",
-            error: "Introducción no válido",
-            rule: /^(\(".*?"\)\.write$|\([a-z][a-z0-9_]*\)\.write|([a-z][a-z0-9_]*)(.read))$/,
+            nextState: "qfif",
+            error: "Fin no válido",
+            rule: /^:$/,
         },
-        {
-            nextState: "q090",
-            error: "Nombre de variable no válido o inicio mal escrito",
-            rule: /^\(".*$/
-        },
-    ],
-    "q090": [
         {
             nextState: "q9",
-            error: "Palabra no válida o cierre incorrecto",
-            rule: /^[^"]*"\)\.write$/
-        },
-        {
-            nextState: "q090",
-            error: "Palabra no válido",
-            rule: /^[^"]+$/
+            error: "Seguimiento no valido",
+            rule: /^::$/,
         }
     ],
     "q9": [
         {
-            nextState: "q10",
-            error: "Cierre no válido",
-            rule: /\)$/,
+            nextState: "q901",
+            error: "else if no valido",
+            rule: /^(else)$/,
         },
     ],
+
+    "q901": [
+        {
+            nextState: "q10",
+            error: "else if no valido",
+            rule: /^if$/,
+        },
+    ],
+
     "q10": [
         {
-            nextState: "q8",
-            error: "Case no válido",
-            rule: /^case_[a-z][a-z0-9_]*\($/,
-        },
-        {
-            nextState: "q11",
-            error: "Palabra reservada mal escrita",
-            rule: /^exit$/,
+            nextState: "q101",
+            error: "Nombre de la variable del else if no válido",
+            rule: /^\([a-z][a-z0-9_]*\):$/,
         },
     ],
+    "q101": [
+        {
+            nextState: "q102",
+            error: "contenido no válido",
+            rule: /^[a-z][a-z0-9_]*$/,
+        },
+    ],
+    "q102": [
+        {
+            nextState: "qfif",
+            error: "Fin no válido",
+            rule: /^:$/,
+        },
+        {
+            nextState: "q103",
+            error: "Seguimiento no valido",
+            rule: /^::$/,
+        }
+    ],
+    "q103": [
+        {
+            nextState: "q104",
+            error: "else no valido",
+            rule: /^else:$/,
+        },
+    ],
+    "q104": [
+        {
+            nextState: "q105",
+            error: "contenido no válido",
+            rule: /^[a-z][a-z0-9_]*$/,
+        },
+    ],
+    "q105": [
+        {
+            nextState: "qfif",
+            error: "Fin no válido",
+            rule: /^:$/,
+        },
+       
+    ],
+   
     "q11": [
         {
             nextState: "qfs",
@@ -494,6 +531,9 @@ export function validateVariableDeclaration(value) {
     }
     if (currentState === "qfs") {
         return "Declaración de funcion de sentencia válido";
+    }
+    if (currentState === "qfif") {
+        return "If valido";
     }
     else {
         return `Error: ${currentState}: ${stateMap[currentState][0].error}`;
