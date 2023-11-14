@@ -20,11 +20,6 @@ const stateMap = {
             error: "Palabra reservada mal escrita",
             rule: /^string$/,
         },
-        {
-            nextState: "q050",
-            error: "Palabra reservada mal escrita",
-            rule: /^char$/,
-        },
 
         {
             nextState: "qfr",
@@ -56,21 +51,21 @@ const stateMap = {
             error: "Palabra reservada mal escrita",
             rule: /^while$/,
         },
+        /* {
+           nextState: "q17",
+           error: "Nombre de variable no válido",
+           rule: /^[a-z][a-z0-9_]*$/,
+         },*/
 
     ],
     "q010": [
         {
             nextState: "q011",
             error: "Nombre de variable no válido",
-            rule: /^[a-z][a-zA-Z0-9_]*$/,
+            rule: /^[a-z][a-z0-9_]*$/,
         },
     ],
     "q011": [
-        {
-            nextState: "q013",
-            error: "Coma detectada",
-            rule: /^;$/,
-        },
         {
             nextState: "q012",
             error: "Operador no válido",
@@ -164,19 +159,22 @@ const stateMap = {
     ],
     "q040": [
         {
-            nextState: "q0401",
-            error: "Nombre de variable no válido",
-            rule: /^[a-z][a-z0-9]*$/,
-        },
-    ],
-    "q0401": [
-        {
             nextState: "q041",
-            error: "Semicolon expected",
-            rule: /^\s;$/,
+            error: "Nombre de variable no válido",
+            rule: /^[a-z][a-zA-Z0-9]*$/,
         },
+        // {
+        //     nextState: "q041",
+        //     error: "Nombre de variable no válido",
+        //     rule: /^[a-z][a-zA-Z0-9]*$/,
+        // },
     ],
     "q041": [
+        // {
+        //     nextState: "q040",
+        //     error: "Semicolon expected",
+        //     rule: /^[^;]*$/,
+        // },
         {
             nextState: "q042",
             error: "Operador no válido",
@@ -466,13 +464,10 @@ export function validateVariableDeclaration(value) {
         const tokens = line.trim().split(' ');
         for (const token of tokens) {
             const nextState = getNextState(currentState, token);
-            console.log(nextState)
             if (nextState === "q0-error") {
-                console.log("error1")
                 return `Error: ${currentState}: ${stateMap[currentState][0].error}`;
             }
-            if ((currentState === "q1" && token.endsWith('_')) || (currentState === "q010" && token.endsWith('_')) || (currentState === "q020" && token.endsWith('_')) || (currentState === "q030" && token.endsWith('_')) || (currentState === "q0401" && token.endsWith('_')) || (currentState === "qe" && token.endsWith('_'))) {
-                console.log("error2")
+            if ((currentState === "q1" && token.endsWith('_')) || (currentState === "q010" && token.endsWith('_')) || (currentState === "q020" && token.endsWith('_')) || (currentState === "q030" && token.endsWith('_')) || (currentState === "q040" && token.endsWith('_')) || (currentState === "qe" && token.endsWith('_'))) {
                 return `Error: Nombre de variable no puede terminar en '_'`;
             }
             currentState = nextState;
