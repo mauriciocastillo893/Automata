@@ -367,9 +367,16 @@ const stateMap = {
     ],
     "q103": [
         {
+            nextState: "q106",
+            error: "else no valido",
+            rule: /^else$/,
+        },
+    ],
+    "q106": [
+        {
             nextState: "q104",
             error: "else no valido",
-            rule: /^else:$/,
+            rule: /^:$/,
         },
     ],
     "q104": [
@@ -399,35 +406,22 @@ const stateMap = {
         {
             nextState: "q13",
             error: "Nombre de variable de while no válido",
-            rule: /^\([a-z][a-z0-9_]*$/,
+            rule: /^\([a-z][a-z0-9_]*\):$/,
         },
     ],
     "q13": [
         {
             nextState: "q14",
             error: "Operador no válido",
-            rule: /^==$/,
+            rule: /^[a-z][a-z0-9_]*$/,
         },
     ],
     "q14": [
         {
-            nextState: "q15",
+            nextState: "qfwhile",
             error: "Valor no válido",
-            rule: /^(true\)|false\){)$/
+            rule: /^:$/
         },
-    ],
-    "q15": [
-        {
-            nextState: "q16",
-            error: "Introducción no válido",
-            rule: /^(\(".*?"\)\.write$|\([a-z][a-z0-9_]*\)\.write|([a-z][a-z0-9_]*)(.read))$/,
-        },
-        {
-            nextState: "q016",
-            error: "Nombre de variable no válido o inicio mal escrito",
-            rule: /^\(".*$/
-        },
-
     ],
     "q016": [
         {
@@ -534,6 +528,9 @@ export function validateVariableDeclaration(value) {
     }
     if (currentState === "qfif") {
         return "If valido";
+    }
+    if (currentState === "qfwhile") {
+        return "while valido";
     }
     else {
         return `Error: ${currentState}: ${stateMap[currentState][0].error}`;
