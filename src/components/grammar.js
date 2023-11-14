@@ -26,7 +26,6 @@ const stateMap = {
             rule: /^char$/,
         },
 
-
         {
             nextState: "qfr",
             error: "Invalid variable name o reserved word name",
@@ -50,18 +49,14 @@ const stateMap = {
         {
             nextState: "q6",
             error: "Palabra reservada mal escrita",
-            rule: /^switch$/,
+            rule: /^if$/,
         },
         {
             nextState: "q12",
             error: "Palabra reservada mal escrita",
             rule: /^while$/,
         },
-        /* {
-           nextState: "q17",
-           error: "Invalid variable name",
-           rule: /^[a-z][a-z0-9_]*$/,
-         },*/
+
 
     ],
     "q010": [
@@ -407,7 +402,7 @@ const stateMap = {
         {
             nextState: "q5",
             error: "Invalid return statement",
-            rule: /^[a-zA-Z0-9_]*[a-zA-Z0-9_]+;$/,
+            rule: /^[a-zA-Z0-9_][a-zA-Z0-9_]+;$/,
         },
         {
             nextState: "q050",
@@ -434,28 +429,28 @@ const stateMap = {
     "q6": [
         {
             nextState: "q7",
-            error: "Nombre de variable de switch no válido",
-            rule: /^\([a-z][a-z0-9_]*\){$/,
+            error: "Nombre de la variable del if no válido",
+            rule: /^\([a-z][a-z0-9_]*\):$/,
         },
     ],
     "q7": [
         {
             nextState: "q8",
-            error: "Case no válido",
-            rule: /^case_[a-z][a-z0-9_]*\($/,
+            error: "contenido no válido",
+            rule: /^[a-z][a-z0-9_]*$/,
         },
     ],
     "q8": [
         {
-            nextState: "q9",
-            error: "Introducción no válido",
-            rule: /^(\(".*?"\)\.write$|\([a-z][a-z0-9_]*\)\.write|([a-z][a-z0-9_]*)(.read))$/,
+            nextState: "qfif",
+            error: "Fin no válido",
+            rule: /^:$/,
         },
         {
-            nextState: "q090",
-            error: "Invalid name variable o inicio mal escrito",
-            rule: /^\(".*$/
-        },
+            nextState: "q9",
+            error: "Seguimiento no valido",
+            rule: /^::$/,
+        }
     ],
     "q090": [
         {
@@ -469,66 +464,121 @@ const stateMap = {
             rule: /^[^"]+$/
         }
     ],
-    "q9": [
+    "q901": [
         {
             nextState: "q10",
-            error: "Invalid curly braces closing",
-            rule: /\)$/,
+            error: "else if no valido",
+            rule: /^if$/,
+        }
+    ],
+    "q9": [
+        {
+            nextState: "q901",
+            error: "else if no valido",
+            rule: /^(else)$/,
         },
     ],
     "q10": [
         {
-            nextState: "q8",
-            error: "Case no válido",
-            rule: /^case_[a-z][a-z0-9_]*\($/,
+            nextState: "q101",
+            error: "Nombre de la variable del else if no válido",
+            rule: /^\([a-z][a-z0-9_]*\):$/,
+        },
+        // {
+        //     nextState: "q11",
+        //     error: "Misspelled reserved word",
+        //     rule: /^exit$/,
+        // },
+    ],
+    "q101": [
+        {
+            nextState: "q102",
+            error: "contenido no válido",
+            rule: /^[a-z][a-z0-9_]*$/,
+        }
+    ],
+    "q102": [
+        {
+            nextState: "qfif",
+            error: "Fin no válido",
+            rule: /^:$/,
         },
         {
-            nextState: "q11",
-            error: "Misspelled reserved word",
-            rule: /^exit$/,
+            nextState: "q103",
+            error: "Seguimiento no valido",
+            rule: /^::$/,
+        }
+    ],
+    "q103": [
+        {
+            nextState: "q106",
+            error: "else no valido",
+            rule: /^else$/,
         },
+    ],
+    "q106":[
+        {
+            nextState: "q104",
+            error: "else no valido",
+            rule: /^:$/,
+        },
+    ],
+    "q104": [
+        {
+            nextState: "q105",
+            error: "contenido no válido",
+            rule: /^[a-z][a-z0-9_]*$/,
+        },
+    ],
+    "q105": [
+        {
+            nextState: "qfif",
+            error: "Fin no válido",
+            rule: /^:$/,
+        },
+
     ],
     "q11": [
         {
             nextState: "qfs",
             error: "Invalid curly braces closing",
-            rule: /}$/,
+            rule: /^\([a-z][a-z0-9_]*\):$/,
         },
     ],
     "q12": [
         {
             nextState: "q13",
             error: "Nombre de variable de while no válido",
-            rule: /^\([a-z][a-z0-9_]*$/,
+            rule: /^\([a-z][a-z0-9_]*\):$/,
         },
     ],
     "q13": [
         {
             nextState: "q14",
             error: "Invalid operator",
-            rule: /^==$/,
+            rule: /^[a-z][a-z0-9_]*$/,
         },
     ],
     "q14": [
         {
-            nextState: "q15",
+            nextState: "qfwhile",
             error: "Invalid expression",
-            rule: /^(true\)|false\){)$/
+            rule: /^:$/
         },
     ],
-    "q15": [
-        {
-            nextState: "q16",
-            error: "Introducción no válido",
-            rule: /^(\(".*?"\)\.write$|\([a-z][a-z0-9_]*\)\.write|([a-z][a-z0-9_]*)(.read))$/,
-        },
-        {
-            nextState: "q016",
-            error: "Invalid variable name o inicio mal escrito",
-            rule: /^\(".*$/
-        },
+    // "q15": [
+    //     {
+    //         nextState: "q16",
+    //         error: "Introducción no válido",
+    //         rule: /^(\(".*?"\)\.write$|\([a-z][a-z0-9_]*\)\.write|([a-z][a-z0-9_]*)(.read))$/,
+    //     },
+    //     {
+    //         nextState: "q016",
+    //         error: "Invalid variable name o inicio mal escrito",
+    //         rule: /^\(".*$/
+    //     },
 
-    ],
+    // ],
     "q016": [
         {
             nextState: "q16",
@@ -602,10 +652,10 @@ export function validateVariableDeclaration(value) {
         for (const token of tokens) {
             const nextState = getNextState(currentState, token);
             if (nextState === "q0-error") {
-                return `Error: ${currentState}: ${stateMap[currentState][0].error}`;
+                return `ERROR UNEXPECTED [${currentState}]: ${stateMap[currentState][0].error}`;
             }
             if ((currentState === "q1" && token.endsWith('_')) || (currentState === "q010" && token.endsWith('_')) || (currentState === "q020" && token.endsWith('_')) || (currentState === "q030" && token.endsWith('_')) || (currentState === "q040" && token.endsWith('_')) || (currentState === "qe" && token.endsWith('_'))) {
-                return `Error: Nombre de variable no puede terminar en '_'`;
+                return `ERROR UNEXPECTED: Nombre de variable no puede terminar en '_'`;
             }
             currentState = nextState;
         }
@@ -630,7 +680,13 @@ export function validateVariableDeclaration(value) {
         return "Function declaration is valid";
     }
     if (currentState === "qfs") {
-        return "Declaración de funcion de sentencia válido";
+        return "Statement declaration function is valid";
+    }
+    if (currentState === "qfif") {
+        return "Statement Family IF is valid";
+    }
+    if (currentState === "qfwhile") {
+        return "While statement valid";
     }
     else {
         return `Error: ${currentState}: ${stateMap[currentState][0].error}`;
@@ -648,16 +704,3 @@ function getNextState(currentState, token) {
     }
     return "q0-error";
 }
-
-/*const readline = require('readline');
- 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
- 
-rl.question('Ingrese el bloque de codigo: ', (input) => {
-  const result = validateVariableDeclaration(input);
-  console.log(result);
-  rl.close();
-});*/
