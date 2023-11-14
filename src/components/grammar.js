@@ -25,35 +25,19 @@ const stateMap = {
             error: "Misspelled reserved word.",
             rule: /^char$/,
         },
-
-        {
-            nextState: "qfr",
-            error: "Invalid variable name o reserved word name",
-            rule: /^([a-z][a-z0-9_]*)(.read)$/,
-        },
-        {
-            nextState: "qfw",
-            error: "Invalid variable name o reserved word name",
-            rule: /^(\(".*?"\)\.write$|\([a-z][a-z0-9_]*\)\.write)$/,
-        },
-        {
-            nextState: "q20",
-            error: "Invalid variable name o reserved word name",
-            rule: /^\(".*$/
-        },
         {
             nextState: "q2",
-            error: "Palabra reservada mal escrita",
+            error: "Misspelled reserved word.",
             rule: /^func$/,
         },
         {
             nextState: "q6",
-            error: "Palabra reservada mal escrita",
+            error: "Misspelled reserved word.",
             rule: /^if$/,
         },
         {
             nextState: "q12",
-            error: "Palabra reservada mal escrita",
+            error: "Misspelled reserved word.",
             rule: /^while$/,
         },
 
@@ -363,20 +347,36 @@ const stateMap = {
         {
             nextState: "q3",
             error: "Invalid name variable",
-            rule: /^[a-z][a-z0-9_]*$/,
+            rule: /^[a-z][a-zA-Z0-9_]*$/,
         }
     ],
     "q3": [
         {
-            nextState: "q4",
+            nextState: "q301r",
             error: "Invalid closing parenthesis and opening curly braces",
             rule: /^(\(\)$|^\([a-zA-Z0-9_,]*\):)$/
         },
+    ],
+    "q301r": [
         {
-            nextState: "q003",
-            error: "Invalid closing parenthesis and opening curly braces",
-            rule: /^\([a-z][a-z0-9_]*$/
-        }
+            nextState: "q302r",
+            error: "Invalid content statement",
+            rule: /^[a-zA-Z0-9]*$/
+        },
+    ],
+    "q302r": [
+        {
+            nextState: "q3r",
+            error: "Semicolon expected",
+            rule: /^;$/
+        },
+    ],
+    "q3r": [
+        {
+            nextState: "q4",
+            error: "Invalid return statement",
+            rule: /^[r,e,t,u,r,n]*$/
+        },
     ],
     "q003": [
         {
@@ -400,9 +400,9 @@ const stateMap = {
     ],
     "q4": [
         {
-            nextState: "q5",
+            nextState: "q401r",
             error: "Invalid return statement",
-            rule: /^[a-zA-Z0-9_][a-zA-Z0-9_]+;$/,
+            rule: /^[a-zA-Z0-9_.]+$/,
         },
         {
             nextState: "q050",
@@ -410,7 +410,13 @@ const stateMap = {
             rule: /^\(".*$/,
         },
     ],
-    
+    "q401r": [
+        {
+            nextState: "q5",
+            error: "Invalid return statement",
+            rule: /^;$/,
+        },
+    ],
     "q050": [
         {
             nextState: "q050",
@@ -429,26 +435,26 @@ const stateMap = {
     "q6": [
         {
             nextState: "q7",
-            error: "Nombre de la variable del if no válido",
+            error: "Structure if statement expected",
             rule: /^\([a-z][a-z0-9_]*\):$/,
         },
     ],
     "q7": [
         {
             nextState: "q8",
-            error: "contenido no válido",
+            error: "No empty content expected",
             rule: /^[a-z][a-z0-9_]*$/,
         },
     ],
     "q8": [
         {
             nextState: "qfif",
-            error: "Fin no válido",
+            error: "Closing if statement expected",
             rule: /^:$/,
         },
         {
             nextState: "q9",
-            error: "Seguimiento no valido",
+            error: "Expected ::",
             rule: /^::$/,
         }
     ],
@@ -467,73 +473,68 @@ const stateMap = {
     "q901": [
         {
             nextState: "q10",
-            error: "else if no valido",
+            error: "Invalid else if statement",
             rule: /^if$/,
         }
     ],
     "q9": [
         {
             nextState: "q901",
-            error: "else if no valido",
+            error: "Invalid else if statement",
             rule: /^(else)$/,
         },
     ],
     "q10": [
         {
             nextState: "q101",
-            error: "Nombre de la variable del else if no válido",
-            rule: /^\([a-z][a-z0-9_]*\):$/,
+            error: "Params structure of else if invalid",
+            rule: /^\([a-z][a-zA-Z0-9_]*\):$/,
         },
-        // {
-        //     nextState: "q11",
-        //     error: "Misspelled reserved word",
-        //     rule: /^exit$/,
-        // },
     ],
     "q101": [
         {
             nextState: "q102",
-            error: "contenido no válido",
+            error: "No empty content expected",
             rule: /^[a-z][a-z0-9_]*$/,
         }
     ],
     "q102": [
         {
             nextState: "qfif",
-            error: "Fin no válido",
+            error: "Colon expected",
             rule: /^:$/,
         },
         {
             nextState: "q103",
-            error: "Seguimiento no valido",
+            error: "Double colon expected",
             rule: /^::$/,
         }
     ],
     "q103": [
         {
             nextState: "q106",
-            error: "else no valido",
+            error: "Invalid else statement",
             rule: /^else$/,
         },
     ],
     "q106":[
         {
             nextState: "q104",
-            error: "else no valido",
+            error: "Invalidad else statement",
             rule: /^:$/,
         },
     ],
     "q104": [
         {
             nextState: "q105",
-            error: "contenido no válido",
+            error: "No empty content expected",
             rule: /^[a-z][a-z0-9_]*$/,
         },
     ],
     "q105": [
         {
             nextState: "qfif",
-            error: "Fin no válido",
+            error: "Colon expected",
             rule: /^:$/,
         },
 
@@ -566,81 +567,6 @@ const stateMap = {
             rule: /^:$/
         },
     ],
-    // "q15": [
-    //     {
-    //         nextState: "q16",
-    //         error: "Introducción no válido",
-    //         rule: /^(\(".*?"\)\.write$|\([a-z][a-z0-9_]*\)\.write|([a-z][a-z0-9_]*)(.read))$/,
-    //     },
-    //     {
-    //         nextState: "q016",
-    //         error: "Invalid variable name o inicio mal escrito",
-    //         rule: /^\(".*$/
-    //     },
-
-    // ],
-    "q016": [
-        {
-            nextState: "q16",
-            error: "Palabra no válida o cierre incorrecto",
-            rule: /^[^"]*"\)\.write$/
-        },
-        {
-            nextState: "q016",
-            error: "Invalid word phrase",
-            rule: /^[^"]+$/
-        }
-    ],
-    "q16": [
-        {
-            nextState: "q11",
-            error: "Palabra reservada no válido",
-            rule: /^exit$/,
-        },
-    ],
-    "q17": [
-        {
-            nextState: "q18",
-            error: "Invalid operator",
-            rule: /^=$/,
-        }
-    ],
-    "q18": [
-        {
-            nextState: "q19",
-            error: "Invalid expression",
-            rule: /^([0-9]*|[0-9]*.[0-9]*|true|false|".*")$/,
-        },
-        {
-            nextState: "q19",
-            error: "Invalid expression",
-            rule: /^".*$/
-        },
-    ],
-    "q19": [
-        {
-            nextState: "q20",
-            error: "Invalid expression o hace falta comillas",
-            rule: /^[^"]*"$/
-        },
-        {
-            nextState: "q19",
-            error: "Invalid word phrase",
-            rule: /^[^"]+$/
-        }
-    ],
-    "q20": [
-        {
-            nextState: "qfw",
-            error: "Palabra no válida o cierre incorrecto",
-            rule: /^[^"]*"\)\.write$/
-        },
-        {
-            nextState: "q20",
-            error: "Invalid word phrase",
-            rule: /^[^"]+$/
-        }
-    ],
 };
 
 export function validateVariableDeclaration(value) {
@@ -666,15 +592,6 @@ export function validateVariableDeclaration(value) {
     }
     if (currentState === "q013" || currentState === "q023" || currentState === "q033" || currentState === "q043" || currentState === "q083") {
         return "Variable declaration and initialization is valid";
-    }
-    if (currentState === "q19" || currentState === "q20") {
-        return "Inicialización de variable válido";
-    }
-    if (currentState === "qfr") {
-        return "Leer variable válido";
-    }
-    if (currentState === "qfw") {
-        return "Escribir variable válido";
     }
     if (currentState === "qff") {
         return "Function declaration is valid";

@@ -49,9 +49,15 @@ function Automatum() {
       :
     \rFUNCIONES
     > func nombreFunción (parametro):
-        contenido
-        return;
+        return x|none|true|false|9|9.2 ;
       :
+    > func nombreFunción (parametro1,parametro2):
+      return x|none|true|false|9|9.2 ;
+    :
+    > func nombreFunción (parametro1,parametro2):
+      contenido ;
+      return x|none|true|false|9|9.2 ;
+    :
     `
 
     const onChange = useCallback((value) => {
