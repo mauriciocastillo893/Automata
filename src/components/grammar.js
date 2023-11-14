@@ -2,38 +2,44 @@ const stateMap = {
     "qe": [
         {
             nextState: "q010",
-            error: "Palabra reservada mal escrita",
+            error: "Misspelled reserved word.",
             rule: /^int$/,
         },
         {
             nextState: "q020",
-            error: "Palabra reservada mal escrita",
+            error: "Misspelled reserved word.",
             rule: /^float$/,
         },
         {
             nextState: "q030",
-            error: "Palabra reservada mal escrita",
+            error: "Misspelled reserved word.",
             rule: /^bool$/,
         },
         {
             nextState: "q040",
-            error: "Palabra reservada mal escrita",
+            error: "Misspelled reserved word.",
             rule: /^string$/,
         },
+        {
+            nextState: "q080",
+            error: "Misspelled reserved word.",
+            rule: /^char$/,
+        },
+
 
         {
             nextState: "qfr",
-            error: "Nombre de variable no válido o palabra reservada mal escrita",
+            error: "Invalid variable name o palabra reservada mal escrita",
             rule: /^([a-z][a-z0-9_]*)(.read)$/,
         },
         {
             nextState: "qfw",
-            error: "Nombre de variable no válido o palabra reservada mal escrita",
+            error: "Invalid variable name o palabra reservada mal escrita",
             rule: /^(\(".*?"\)\.write$|\([a-z][a-z0-9_]*\)\.write)$/,
         },
         {
             nextState: "q20",
-            error: "Nombre de variable no válido o palabra reservada mal escrita",
+            error: "Invalid variable name o palabra reservada mal escrita",
             rule: /^\(".*$/
         },
         {
@@ -53,181 +59,315 @@ const stateMap = {
         },
         /* {
            nextState: "q17",
-           error: "Nombre de variable no válido",
+           error: "Invalid variable name",
            rule: /^[a-z][a-z0-9_]*$/,
          },*/
 
     ],
     "q010": [
         {
-            nextState: "q011",
-            error: "Nombre de variable no válido",
+            nextState: "q0101",
+            error: "Invalid variable name",
             rule: /^[a-z][a-z0-9_]*$/,
+        },
+    ],
+    "q0101": [
+        {
+            nextState: "q011",
+            error: "Semicolon or equals expected",
+            rule: /^;$/,
+        },
+        {
+            nextState: "q012",
+            error: "Invalid operator",
+            rule: /^=$/,
         },
     ],
     "q011": [
         {
             nextState: "q012",
-            error: "Operador no válido",
+            error: "Invalid operator",
             rule: /^=$/,
         },
         {
             nextState: "q010",
-            error: "Separacion de variables no válido",
+            error: "Invalid variable separation",
             rule: /^,$/,
         }
     ],
     "q012": [
         {
-            nextState: "q013",
-            error: "Valor no válido",
+            nextState: "q0103",
+            error: "Invalid expression",
             rule: /^[0-9]*$/,
+        },
+    ],
+    "q0103": [
+        {
+            nextState: "q013",
+            error: "Semicolon expected",
+            rule: /^;$/,
         },
     ],
     "q013": [
         {
             nextState: "q010",
-            error: "Separacion de variables no válido",
+            error: "Invalid variable separation",
             rule: /^,$/,
         }
     ],
     "q020": [
         {
-            nextState: "q021",
-            error: "Nombre de variable no válido",
+            nextState: "q0201",
+            error: "Invalid variable name",
             rule: /^[a-z][a-z0-9_]*$/,
+        },
+    ],
+    "q0201": [
+        {
+            nextState: "q021",
+            error: "Semicolon or equals expected",
+            rule: /^;$/,
+        },
+        {
+            nextState: "q022",
+            error: "Invalid operator",
+            rule: /^=$/,
         },
     ],
     "q021": [
         {
             nextState: "q022",
-            error: "Operador no válido",
+            error: "Invalid operator",
             rule: /^=$/,
         },
         {
             nextState: "q020",
-            error: "Separacion de variables no válido",
+            error: "Invalid variable separation",
             rule: /^,$/,
         }
     ],
     "q022": [
         {
-            nextState: "q023",
-            error: "Valor no válido",
+            nextState: "q0203",
+            error: "Invalid expression",
             rule: /^[0-9]*.[0-9]*$/,
+        },
+    ],
+    "q0203": [
+        {
+            nextState: "q023",
+            error: "Semicolon expected",
+            rule: /^;$/,
         },
     ],
     "q023": [
         {
             nextState: "q020",
-            error: "Separacion de variables no válido",
+            error: "Invalid variable separation",
             rule: /^,$/,
         }
     ],
     "q030": [
         {
-            nextState: "q031",
-            error: "Nombre de variable no válido",
+            nextState: "q0301",
+            error: "Invalid variable name",
             rule: /^[a-z][a-z0-9_]*$/,
+        },
+    ],
+    "q0301": [
+        {
+            nextState: "q031",
+            error: "Semicolon or equals expected",
+            rule: /^;$/,
+        },
+        {
+            nextState: "q032",
+            error: "Invalid operator",
+            rule: /^=$/,
         },
     ],
     "q031": [
         {
             nextState: "q032",
-            error: "Operador no válido",
+            error: "Invalid operator",
             rule: /^=$/,
         },
         {
             nextState: "q030",
-            error: "Separacion de variables no válido",
+            error: "Invalid variable separation",
             rule: /^,$/,
         }
     ],
     "q032": [
         {
-            nextState: "q033",
-            error: "Valor no válido",
+            nextState: "q0303",
+            error: "Invalid expression",
             rule: /^(true|false)*$/,
+        },
+    ],
+    "q0303": [
+        {
+            nextState: "q033",
+            error: "Semicolon expected",
+            rule: /^;$/,
         },
     ],
     "q033": [
         {
             nextState: "q030",
-            error: "Separacion de variables no válido",
+            error: "Invalid variable separation",
             rule: /^,$/,
         }
     ],
     "q040": [
         {
-            nextState: "q041",
-            error: "Nombre de variable no válido",
+            nextState: "q0401",
+            error: "Invalid expression",
             rule: /^[a-z][a-zA-Z0-9]*$/,
         },
-        // {
-        //     nextState: "q041",
-        //     error: "Nombre de variable no válido",
-        //     rule: /^[a-z][a-zA-Z0-9]*$/,
-        // },
     ],
-    "q041": [
-        // {
-        //     nextState: "q040",
-        //     error: "Semicolon expected",
-        //     rule: /^[^;]*$/,
-        // },
+    "q0401": [
+        {
+            nextState: "q041",
+            error: "Semicolon or equals expected",
+            rule: /^;$/,
+        },
         {
             nextState: "q042",
-            error: "Operador no válido",
+            error: "Invalid operator",
+            rule: /^=$/,
+        },
+    ],
+    "q041": [
+        {
+            nextState: "q042",
+            error: "Invalid operator",
             rule: /^=$/,
         },
         {
             nextState: "q040",
-            error: "Separacion de variables no válido",
+            error: "Invalid variable separation",
             rule: /^,$/,
         }
     ],
     "q042": [
         {
-            nextState: "q043",
-            error: "Valor no válido",
+            nextState: "q0403",
+            error: "Double quotation marks expected",
             rule: /^".*"$/
         },
         {
             nextState: "q044",
-            error: "Valor no válido",
+            error: "Double quotation marks expected",
             rule: /^".*$/
+        },
+    ],
+    "q0403": [
+        {
+            nextState: "q043",
+            error: "Semicolon expected",
+            rule: /^;$/,
         },
     ],
     "q043": [
         {
             nextState: "q040",
-            error: "Separacion de variables no válido",
+            error: "Invalid variable separation",
             rule: /^,$/,
         }
     ],
     "q044": [
         {
             nextState: "q043",
-            error: "Valor no válido o hace falta comillas",
-            rule: /^[^"]*"$/
+            error: "Invalid value or double quotation marks missing",
+            rule: /^[^"]"*$/
         },
         {
             nextState: "q044",
-            error: "Palabra no válido",
+            error: "Invalid word",
+            rule: /^[^"]+$/
+        }
+    ],"q080": [
+        {
+            nextState: "q0801",
+            error: "Invalid expression",
+            rule: /^[a-z][a-zA-Z0-9]*$/,
+        },
+    ],
+    "q0801": [
+        {
+            nextState: "q081",
+            error: "Semicolon or equals expected",
+            rule: /^;$/,
+        },
+        {
+            nextState: "q082",
+            error: "Invalid operator",
+            rule: /^=$/,
+        },
+    ],
+    "q081": [
+        {
+            nextState: "q082",
+            error: "Invalid operator",
+            rule: /^=$/,
+        },
+        {
+            nextState: "q080",
+            error: "Invalid variable separation",
+            rule: /^,$/,
+        }
+    ],
+    "q082": [
+        {
+            nextState: "q0803",
+            error: "Double quotation marks expected",
+            rule: /^".*"$/
+        },
+        {
+            nextState: "q084",
+            error: "Double quotation marks expected",
+            rule: /^".*$/
+        },
+    ],
+    "q0803": [
+        {
+            nextState: "q083",
+            error: "Semicolon expected",
+            rule: /^;$/,
+        },
+    ],
+    "q083": [
+        {
+            nextState: "q080",
+            error: "Invalid variable separation",
+            rule: /^,$/,
+        }
+    ],
+    "q084": [
+        {
+            nextState: "q083",
+            error: "Invalid value or double quotation marks missing",
+            rule: /^[^"]"*$/
+        },
+        {
+            nextState: "q084",
+            error: "Invalid word",
             rule: /^[^"]+$/
         }
     ],
     "q1": [
         {
             nextState: "qfd",
-            error: "Nombre de variable no válido",
+            error: "Invalid variable name",
             rule: /^[a-z][a-z0-9_]*$/,
         },
     ],
     "q2": [
         {
             nextState: "q3",
-            error: "Nombre de variable no válido",
+            error: "Invalid variable name",
             rule: /^[a-z][a-z0-9_]*$/,
         }
     ],
@@ -246,7 +386,7 @@ const stateMap = {
     "q003": [
         {
             nextState: "q004",
-            error: "Separacion de variables no válido",
+            error: "Invalid variable separation",
             rule: /^,$/,
         }
     ],
@@ -266,12 +406,12 @@ const stateMap = {
     "q4": [
         {
             nextState: "q5",
-            error: "Nombre de variable no válido o palabra reservada mal escrita",
+            error: "Invalid variable name o palabra reservada mal escrita",
             rule: /^(\(".*?"\)\.write$|\([a-z][a-z0-9_]*\)\.write|([a-z][a-z0-9_]*)(.read))$/,
         },
         {
             nextState: "q050",
-            error: "Nombre de variable no válido o inicio mal escrito",
+            error: "Invalid variable name o inicio mal escrito",
             rule: /^\(".*$/
         },
     ],
@@ -316,7 +456,7 @@ const stateMap = {
         },
         {
             nextState: "q090",
-            error: "Nombre de variable no válido o inicio mal escrito",
+            error: "Invalid variable name o inicio mal escrito",
             rule: /^\(".*$/
         },
     ],
@@ -347,7 +487,7 @@ const stateMap = {
         },
         {
             nextState: "q11",
-            error: "Palabra reservada mal escrita",
+            error: "Misspelled reserved word",
             rule: /^exit$/,
         },
     ],
@@ -368,14 +508,14 @@ const stateMap = {
     "q13": [
         {
             nextState: "q14",
-            error: "Operador no válido",
+            error: "Invalid operator",
             rule: /^==$/,
         },
     ],
     "q14": [
         {
             nextState: "q15",
-            error: "Valor no válido",
+            error: "Invalid expression",
             rule: /^(true\)|false\){)$/
         },
     ],
@@ -387,7 +527,7 @@ const stateMap = {
         },
         {
             nextState: "q016",
-            error: "Nombre de variable no válido o inicio mal escrito",
+            error: "Invalid variable name o inicio mal escrito",
             rule: /^\(".*$/
         },
 
@@ -414,26 +554,26 @@ const stateMap = {
     "q17": [
         {
             nextState: "q18",
-            error: "Operador no válido",
+            error: "Invalid operator",
             rule: /^=$/,
         }
     ],
     "q18": [
         {
             nextState: "q19",
-            error: "Valor no válido",
+            error: "Invalid expression",
             rule: /^([0-9]*|[0-9]*.[0-9]*|true|false|".*")$/,
         },
         {
             nextState: "q19",
-            error: "Valor no válido",
+            error: "Invalid expression",
             rule: /^".*$/
         },
     ],
     "q19": [
         {
             nextState: "q20",
-            error: "Valor no válido o hace falta comillas",
+            error: "Invalid expression o hace falta comillas",
             rule: /^[^"]*"$/
         },
         {
@@ -475,10 +615,10 @@ export function validateVariableDeclaration(value) {
     }
 
     if (currentState === "qfd" || currentState === "q011" || currentState === "q021" || currentState === "q031" || currentState === "q041") {
-        return "Declaración de variable válida";
+        return "Declaration variable is accepted";
     }
     if (currentState === "q013" || currentState === "q023" || currentState === "q033" || currentState === "q043") {
-        return "Declaración e inicializacion de variable válido";
+        return "Variable declaration and initialization is valid";
     }
     if (currentState === "q19" || currentState === "q20") {
         return "Inicialización de variable válido";
